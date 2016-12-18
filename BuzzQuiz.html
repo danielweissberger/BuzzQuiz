@@ -30,21 +30,20 @@
         function ShowNext(img){
 
             var id = img.parentNode.id;
-            console.log(id);
             if (id != "frame1") {
                 var images = [].slice.call(document.querySelectorAll('#' + id + ' > .quizImg'), 0);
                 var selImg = images.indexOf(img);
                 answerSum += PPQuiz.questions[currFrame].optionRank[selImg];
-                console.log(answerSum);
                 currFrame += 1;
             }
-            if (id == "frame6"){
+            if (id == "frame"+(PPQuiz.questions.length +1)){
                 var result = GetResult(answerSum, PPQuiz);
                 document.getElementById('result').textContent += 'Thanks for playing, you have ' + result[0] + ' knowledge of table tennis';
                 document.getElementById('finalImg').src = result[1];
             }
+
+            document.getElementById("frame" + divToShow).style.display = "inline-block";
             document.getElementById(id).style.display = "none";
-            document.getElementById("frame"+divToShow).style.display = "inline-block";
             divToShow +=1;
         }
 
@@ -73,7 +72,7 @@
             button.onclick = function() { ShowNext(this); };
             frame1.appendChild(pstart);
             frame1.appendChild(button);
-            mainFrame.append(frame1);
+            mainFrame.appendChild(frame1);
 
             //var mainFrame = document.getElementById("frameHolder");
             for(var i=0;i<quiz.questions.length;i++){
@@ -174,7 +173,7 @@
             for (var j=0;j<quiz.questions.length;j++){
                 total+= quiz.questions[j].optionRank.max();
             }
-            console.log(total);
+
 
             if (sum<Math.floor(total/4)){
                 return ["weaaak","images/weak.jpg"];
