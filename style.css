@@ -1,0 +1,103 @@
+body{ /* Changed the tag */
+    background: url('http://whd.erth.biz/wp-content/uploads/mixed2/office-relax-clean-ping-pong-1920x1080.jpg') no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    z-index:-10;
+    width:100%;
+}
+
+.begin{
+    text-align:center;
+    font-family:helvetica;
+    font-size:40px;
+    color:white;
+    margin-top:20%;
+}
+.beginbtn{
+    margin-left:40%;
+    margin-top:3%;
+}
+
+.background{
+    width:100vw;
+    height:100vh;
+    position:relative;
+}
+.placehold{
+    position:relative;
+    display:inline-block;
+}
+.container{
+    width:100%;
+}
+
+#frameHolder {
+    margin-top:10%;
+    height:500px;
+    position:relative;
+
+}
+
+.quizFrame{
+    position:absolute;
+    height:500px;
+    border: 5px solid cadetblue;
+    width:100%;
+    box-shadow:10px 10px 10px black;
+}
+
+.quizFrame1{
+    background-color: rgba(12, 14, 142, 0.2);
+    z-index:10;
+    display:inline-block;
+
+}
+img:hover{
+    box-shadow:5px 5px 5px black;
+    cursor: pointer;
+}
+.quizFrame2{
+    /*background-color:rgba(255, 153, 51,.5);*/
+    z-index:9;
+    display:none;
+}
+.quizFrame3{
+    /*background-color:rgba(255, 153, 51,.5);*/
+    z-index:8;
+    display:none;
+}
+.quizFrame4{
+    /*background-color:rgba(255, 153, 51,.5);*/
+    z-index:7;
+    display:none;
+}
+.quizFrame5{
+    /*background-color:rgba(255, 153, 51,.5);*/
+    z-index:6;
+    display:none;
+}
+
+.quizFrame6{
+    /*background-color:rgba(255, 153, 51,.5);*/
+    z-index:5;
+    display:none;
+}
+.quizFrame7{
+    /*background-color:rgba(255, 153, 51,.5);*/
+    z-index:4;
+    display:none;
+}
+.quizImg{
+    width:24%;
+    height:200px;
+    margin-top:2%;
+    margin-left:5%;
+}
+
+#finalImg{
+    margin-left:35%;
+    margin-top:3%;
+    height:200px;
+}

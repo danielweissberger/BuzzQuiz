@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html class = "" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <head>
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+        <!-- Optional theme -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+        <!-- Latest compiled and minified JavaScript -->
+
+        <link rel="stylesheet" href="style.css" type="text/css">
+
+
+
+
+        <meta charset="UTF-8">
+        <title>Quiz Generator</title>
+    </head>
+</head>
+<body >
+
+
+
+    <script>
+        var currFrame = 0;
+        var divToShow = 2;
+        function ShowNext(img){
+
+            var id = img.parentNode.id;
+            console.log(id);
+            if (id != "frame1") {
+                var images = [].slice.call(document.querySelectorAll('#' + id + ' > .quizImg'), 0);
+                var selImg = images.indexOf(img);
+                answerSum += PPQuiz.questions[currFrame].optionRank[selImg];
+                console.log(answerSum);
+                currFrame += 1;
+            }
+            if (id == "frame6"){
+                var result = GetResult(answerSum, PPQuiz);
+                document.getElementById('result').textContent += 'Thanks for playing, you have ' + result[0] + ' knowledge of table tennis';
+                document.getElementById('finalImg').src = result[1];
+            }
+            document.getElementById(id).style.display = "none";
+            document.getElementById("frame"+divToShow).style.display = "inline-block";
+            divToShow +=1;
+        }
+
+        var frameCounter = 2;
+        function CreateQuizFrames(quiz){
+            var container = document.createElement("div");
+            container.className = "container";
+            document.body.appendChild(container);
+            var row = document.createElement("div");
+            row.className = "row";
+            var placeholder = document.createElement("div");
+            placeholder.className = "col-md-3";
+            //row.appendChild(placeholder);
+            var mainFrame = document.createElement("div");
+            mainFrame.className = "col-md-6";
+            mainFrame.id = "frameHolder";
+            var frame1 = document.createElement("div");
+            frame1.id = "frame1";
+            frame1.className = "quizFrame quizFrame1";
+            var pstart = document.createElement("p");
+            pstart.className = "begin";
+            pstart.textContent = "Click Start Quiz below to begin the quiz";
+            var button = document.createElement("BUTTON");
+            button.textContent = "Start Quiz";
+            button.className = "beginbtn btn btn-primary btn-lg";
+            button.onclick = function() { ShowNext(this); };
+            frame1.appendChild(pstart);
+            frame1.appendChild(button);
+            mainFrame.append(frame1);
+
+            //var mainFrame = document.getElementById("frameHolder");
+            for(var i=0;i<quiz.questions.length;i++){
+                var div = document.createElement("div");
+                div.className = "quizFrame"+ " quizFrame"+ frameCounter;
+                div.id = "frame"+frameCounter;
+
+                var p = document.createElement("p");
+                p.textContent =  quiz.questions[i].question;
+                p.style.color="white";
+                p.style.fontSize= "25px";
+                p.style.fontFamily= "helvetica";
+                p.style.fontWeight = "200";
+                p.style.textAlign= "center"
+                div.appendChild(p);
+                for(var j=0;j<quiz.questions[i].options.length;j++){
+                    var img = document.createElement("IMG");
+                    img.src = quiz.questions[i].options[j];
+                    img.className = "quizImg";
+                    img.onclick = function() { ShowNext(this); };
+                    div.appendChild(img);
+                }
+                mainFrame.appendChild(div);
+                frameCounter+=1;
+
+            }
+            var finalFrame = document.createElement("div");
+            finalFrame.id = "frame"+frameCounter;
+            finalFrame.className ="quizFrame quizFrame"+frameCounter;
+            var h = document.createElement("h1");
+            h.style.marginTop = "10%";
+            h.style.textAlign = "center";
+            h.id = "result";
+            var finalImg = document.createElement("IMG");
+            finalImg.src = "";
+            finalImg.id = "finalImg";
+            finalFrame.appendChild(h);
+            finalFrame.appendChild(finalImg);
+            mainFrame.appendChild(finalFrame);
+            row.appendChild(placeholder);
+            row.appendChild(mainFrame);
+            var placeholder2 = document.createElement("div");
+            placeholder2.className = "col-md-3";
+            row.append(placeholder2);
+            container.appendChild(row);
+        }
+        function Question()
+        {
+            this.question ="";
+            this.options = [];
+            this.optionRank = [];
+        }
+        function Quiz(title,questions)
+        {
+            this.quizTitle = title;
+            this.questions = questions;
+        }
+
+        //Load as many new questions as you would like, and the generator will automatically create frames for the questions
+        //Or create a new quiz object, pass it into CreateQuizFrames and you will have a completely new quiz!!
+        var question1 = new Question();
+        question1.question = "Which paddle below would you choose to play with?"
+        question1.options = ["images/weakPaddle.jpg","images/weakPaddle2.jpg","images/butterfly_pad.jpg","images/butterfly_pad2.jpg", "images/tennis.jpg","images/bat.jpg"];
+        question1.optionRank = [1,1,2,2,0,0];
+        var question2 = new Question();
+        question2.question = "Whom of the following is a famous table-tennis player?"
+        question2.options = ["images/chris.jpg","images/barak.png","images/yao.jpg","images/timoboll.jpg","images/donald.jpg","images/hilary.jpg"];
+        question2.optionRank = [1,0,2,3,0,0];
+        var question3 = new Question();
+        question3.question = "Which table below would you choose to play on?"
+        question3.options = ["images/outdoorTable.jpg","images/outdoorTable2.jpg","images/roundtable.jpg","images/pooltable.jpg","images/protable.jpg","images/goodtable.jpg"];
+        question3.optionRank = [1,1,0,0,3,2];
+        var question4 = new Question();
+        question4.question = "Which shoes would you choose to play with?"
+        question4.options = ["images/butterflyshoe.jpg","images/jordans2.jpg","images/airjordans.jpg","images/asics.jpg","images/stigashoes.jpg","images/highheels.jpg"];
+        question4.optionRank = [2,0,0,1,2,0];
+        var question5 = new Question();
+        question5.question = "Which country is ranked highest in Table Tennis?"
+        question5.options = ["images/china.png","images/japan.png","images/israel.jpg","images/germany.png","images/southkorea.png","images/taiwan.png"];
+        question5.optionRank = [5,4,0,3,2,1];
+
+        var quizTitle = "Welcome to the Table Tennis Quiz, lets find out how well you know Table Tennis!"
+        var PPQuiz = new Quiz(quizTitle, [question1,question2,question3,question4,question5]);
+
+
+        var answerSum = 0;
+
+        CreateQuizFrames(PPQuiz);
+        Array.prototype.max = function() {
+            return Math.max.apply(null, this);
+        };
+
+        Array.prototype.min = function() {
+            return Math.min.apply(null, this);
+        };
+        function GetResult(sum, quiz){
+            var total = 0;
+            for (var j=0;j<quiz.questions.length;j++){
+                total+= quiz.questions[j].optionRank.max();
+            }
+            console.log(total);
+
+            if (sum<Math.floor(total/4)){
+                return ["weaaak","images/weak.jpg"];
+            }
+            if (sum>=Math.floor(total/4) && sum<Math.floor(total/3)){
+                return ["sub par","images/sub-par.jpg"];
+            }
+            if (sum>=Math.floor(total/3) && sum < Math.floor(total/2)){
+                return ["average","images/average.jpg"];
+            }
+            if (sum>=Math.floor(total/2) && sum <Math.floor(total)){
+                return ["excellent","images/excellent.jpg"];
+            }
+            if (sum == total){
+                return ["wizard-like","images/wizard.png"]
+            }
+        }
+
+
+
+
+
+
+
+
+
+    </script>
+</body>
+</html>
